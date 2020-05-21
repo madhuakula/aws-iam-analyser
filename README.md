@@ -4,7 +4,7 @@ This is a simple AWS IAM Analysis utility to gather enitre useful information fr
 
 ## Usage
 
-The below command uses the `default` AWS credentials configured in your system and saves the entire output in JSON format `output.json`.
+The below command uses the `default` AWS credentials configured in your system and saves the entire output in JSON format `output.json`. To perform this analysis you need AWS `SecurityAudit` policy permissions, which has read-only privileges to your AWS resources.
 
 ```bash
 python app.py analysis
