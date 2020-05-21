@@ -34,10 +34,10 @@ python app.py analysis
 
 ## To-Do
 
-* Implement AWS credentials input/validation
-  * Check initially for arguments passed with AWS `access_key` and `secret_access_key` and `region`
-  * Else, see the OS environment variables available `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`
-  * Then finally check and use system aws configurations at `~/.aws/config` and `~/.aws/credentials`
-* Create and implement argument parsing for each module specifically
-* Many ohter...
+- [ ] Implement AWS credentials input/validation
+  - [ ] Check initially for arguments passed with AWS `access_key` and `secret_access_key` and `region`
+  - [ ] Else, see the OS environment variables available `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`
+  - [ ] Then finally check and use system aws configurations at `~/.aws/config` and `~/.aws/credentials`
+- [ ] Create and implement argument parsing for each module specifically
+- [ ] Many ohter...
 
