@@ -1,9 +1,12 @@
 #!/usr/bin/python
-import boto3
+"""This is an AWS IAM analytics utility to gather all related information to an AWS account."""
+
 import json
 import logging
-import time
 import sys
+import time
+
+import boto3
 import click
 
 
