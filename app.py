@@ -235,11 +235,9 @@ def iam_analysis(output_file_path):
     get_account_password_policy_data()
     get_account_summary_data()
 
-    f = open(output_file_path, "w")
-    f.write(json.dumps(iam_output, indent=4, sort_keys=True, default=str))
-    print(f"Successfully written output to : {output_file_path}")
-    f.close()
-
+    with open(output_file_path, "w") as json_output_file:
+        json_output_file.write(json.dumps(iam_output, indent=4, sort_keys=True, default=str))
+        print(f"Successfully written output to : {output_file_path}")
 
 @click.group()
 def main():
