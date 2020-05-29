@@ -13,7 +13,7 @@ import click
 
 
 client = boto3.client('iam')
-logging.basicConfig(filename='output.log', level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='output.log', level=logging.INFO, format='{asctime} - {name} - {levelname} - {message}', style='{')
 
 iam_output = dict()
 
@@ -59,7 +59,7 @@ def get_users_data():
             try:
                 user[key] = list_of_checks[key](UserName=user['UserName'])[key]
             except Exception as e:
-                logging.warning("Failed with %s; skipping.", e)
+                logging.warning(f"Failed with {e}; skipping.")
 
     iam_output['Users'] = response
 
@@ -76,7 +76,7 @@ def get_groups_data():
             try:
                 group[key] = list_of_checks[key](GroupName=group['GroupName'])[key]
             except Exception as e:
-                logging.warning("Failed with %s; skipping.", e)
+                logging.warning(f"Failed with {e}; skipping.")
 
     iam_output['Groups'] = response
 
@@ -95,7 +95,7 @@ def get_roles_data():
             try:
                 role[key] = list_of_checks[key](RoleName=role['RoleName'])[key]
             except Exception as e:
-                logging.warning("Failed with %s; skipping.", e)
+                logging.warning(f"Failed with {e}; skipping.")
 
     iam_output['Roles'] = response
 
@@ -111,7 +111,7 @@ def get_policies_data():
             try:
                 policy[key] = list_of_checks[key](PolicyArn=policy['Arn'])[key]
             except Exception as e:
-                logging.warning("Failed with %s; skipping.", e)
+                logging.warning(f"Failed with {e}; skipping.")
 
     iam_output['Policies'] = response
 
@@ -126,7 +126,7 @@ def get_instance_profiles_data():
             try:
                 profile[key] = list_of_checks[key](InstanceProfileName=profile['InstanceProfileName'])[key]
             except Exception as e:
-                logging.warning("Failed with %s; skipping.", e)
+                logging.warning(f"Failed with {e}; skipping.")
 
     iam_output['InstanceProfiles'] = response
 
@@ -186,7 +186,7 @@ def get_server_certificates_data():
             try:
                 certificate[key] = list_of_checks[key](ServerCertificateName=certificate['ServerCertificateName'])[key]
             except Exception as e:
-                logging.warning("Failed with %s; skipping.", e)
+                logging.warning(f"Failed with {e}; skipping.")
 
     iam_output['ServerCertificateMetadataList'] = response
 
@@ -237,7 +237,7 @@ def iam_analysis(output_file_path):
 
     f = open(output_file_path, "w")
     f.write(json.dumps(iam_output, indent=4, sort_keys=True, default=str))
-    print("Successfully written output to : %s" %(output_file_path))
+    print(f"Successfully written output to : {output_file_path}")
     f.close()
 
 
