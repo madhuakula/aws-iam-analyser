@@ -10,9 +10,17 @@ The below command uses the `default` AWS credentials configured in your system a
 python app.py analysis
 ```
 
+## Installation
+
+the aws-iam-analyzer requires boto3 to run, just install it by typing:
+
+```bash
+pip install boto3
+```
+
 * The output looks like below
 
-```
+```json
 {
   "AccountAliases": [
     "madhuakula-account"
