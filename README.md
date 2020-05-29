@@ -7,7 +7,7 @@ This is a simple AWS IAM Analysis utility to gather enitre useful information fr
 The below command uses the `default` AWS credentials configured in your system and saves the entire output in JSON format `output.json`. To perform this analysis you need AWS `SecurityAudit` policy permissions, which has read-only privileges to your AWS resources.
 
 ```bash
-python app.py analysis
+python app.py
 ```
 
 ## Installation
@@ -15,7 +15,7 @@ python app.py analysis
 the aws-iam-analyzer requires boto3 to run, just install it by typing:
 
 ```bash
-pip install boto3
+pip install -r requirements.txt
 ```
 
 * The output looks like below
@@ -46,6 +46,4 @@ pip install boto3
   - [ ] Check initially for arguments passed with AWS `access_key` and `secret_access_key` and `region`
   - [ ] Else, see the OS environment variables available `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`
   - [ ] Then finally check and use system aws configurations at `~/.aws/config` and `~/.aws/credentials`
-- [ ] Create and implement argument parsing for each module specifically
 - [ ] Many ohter...
-

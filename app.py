@@ -4,6 +4,8 @@ import json
 import logging
 import time
 import sys
+import click
+
 
 client = boto3.client('iam')
 logging.basicConfig(filename='output.log', level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -229,18 +231,24 @@ def iam_analysis(output_file_path):
 
     f = open(output_file_path, "w")
     f.write(json.dumps(iam_output, indent=4, sort_keys=True, default=str))
-    print("Successfully written output to :", output_file_path)
+    print("Successfully written output to : %s" %(output_file_path))
     f.close()
 
-def main(argv):
-    if (len(sys.argv) > 1) and (sys.argv[1] == "analysis"):
-        output_file_path = "output.json"
-        iam_analysis(output_file_path)
-    else:
-        print("Try 'python app.py analysis' for iam analysis")
 
-if __name__ == '__main__':
-    if len(sys.argv) <= 1 :
-        print("Try with 'python app.py analysis' for iam analysis")
-    else:
-        main(sys.argv[1:])
+@click.group()
+def main():
+    """
+    Simple CLI for AWS IAM access rights
+    """
+    pass
+
+@main.command('extract')
+@click.option('--outputpath', default="output.json", help="File to store the results")
+def extract(outputpath):
+    """Extract policies from designated AWS account to which you are logged into"""
+    iam_analysis(outputpath)
+    
+
+if __name__ == "__main__":
+    main()
+
