@@ -1,11 +1,13 @@
 #!/usr/bin/python
 """This is an AWS IAM analytics utility to gather all related information to an AWS account."""
 
+# Standard libraries imports
 import json
 import logging
 import sys
 import time
 
+# 3rd party libraries import
 import boto3
 import click
 
@@ -15,8 +17,8 @@ logging.basicConfig(filename='output.log', level=logging.INFO, format='%(asctime
 
 iam_output = dict()
 
-# Generating credentials report
 def get_credentials_report_data():
+    """Generate the credentials report"""
     client.generate_credential_report()
     while client.generate_credential_report()['State'] != "COMPLETE":
         time.sleep(5)
@@ -38,8 +40,8 @@ def get_credentials_report_data():
 
     iam_output["credential_report"] = res
 
-# Generating the users data
 def get_users_data():
+    """Generate the users' data"""
     response = client.list_users()['Users']
     for user in response:
         list_of_checks = {
@@ -61,8 +63,8 @@ def get_users_data():
 
     iam_output['Users'] = response
 
-# Generating the groups data
 def get_groups_data():
+    """Generate the groups' data"""
     response = client.list_groups()['Groups']
     for group in response:
         list_of_checks = {
@@ -78,8 +80,8 @@ def get_groups_data():
 
     iam_output['Groups'] = response
 
-# Generating the roles data
 def get_roles_data():
+    """Generate the roles' data"""
     response = client.list_roles()['Roles']
     for role in response:
         list_of_checks = {
@@ -97,8 +99,8 @@ def get_roles_data():
 
     iam_output['Roles'] = response
 
-# Generating the policies data
 def get_policies_data():
+    """Generate the policies' data"""
     response = client.list_policies()['Policies']
     for policy in response:
         list_of_checks = {
@@ -113,8 +115,8 @@ def get_policies_data():
 
     iam_output['Policies'] = response
 
-# Generating the instance profile data
 def get_instance_profiles_data():
+    """Generate the instance profile data"""
     response = client.list_instance_profiles()['InstanceProfiles']
     for profile in response:
         list_of_checks = {
@@ -128,13 +130,13 @@ def get_instance_profiles_data():
 
     iam_output['InstanceProfiles'] = response
 
-# Generating the account aliases data
 def get_account_aliases_data():
+    """Generate the account aliases' data"""
     response = client.list_account_aliases()['AccountAliases']
     iam_output['AccountAliases'] = response
 
-# Generating the open id connection providers data
 def get_open_id_connection_providers_data():
+    """Generate the OpenID connection providers' data"""
     response = client.list_open_id_connect_providers()['OpenIDConnectProviderList']
     iam_output['OpenIDConnectProviderList'] = response
 
@@ -153,8 +155,8 @@ def get_open_id_connection_providers_data():
 
 #     iam_output['OpenIDConnectProviderList'] = response
 
-# Generating the saml providers data
 def get_saml_providers_data():
+    """Generate the SAML providers' data"""
     response = client.list_saml_providers()['SAMLProviderList']
     iam_output['SAMLProviderList'] = response
 
@@ -173,8 +175,8 @@ def get_saml_providers_data():
 
 #     iam_output['SAMLProviderList'] = response
 
-# Generating the server certificates data
 def get_server_certificates_data():
+    """Generate the server certificates' data"""
     response = client.list_server_certificates()['ServerCertificateMetadataList']
     for certificate in response:
         list_of_checks = {
@@ -188,13 +190,13 @@ def get_server_certificates_data():
 
     iam_output['ServerCertificateMetadataList'] = response
 
-# Generating the virtual mfa providers data
 def get_virtual_mfa_devices_data():
+    """Generate the virtual MFA providers' data"""
     response = client.list_virtual_mfa_devices()['VirtualMFADevices']
     iam_output['VirtualMFADevices'] = response
 
-# Generating the account authorization data
 def get_account_authorization_data():
+    """Generate the account authorization data"""
     response = dict()
     output = client.get_account_authorization_details()
     response['UserDetailList'] = output['UserDetailList']
@@ -204,23 +206,24 @@ def get_account_authorization_data():
 
     iam_output['AccountAuthorizationDetails'] = response
 
-# Generating the account password policy data
 def get_account_password_policy_data():
+    """Generate the account password policy data"""
     response = client.get_account_password_policy()['PasswordPolicy']
     iam_output['PasswordPolicy'] = response
 
-# Generating the account summary data
 def get_account_summary_data():
+    """Generate the account summary data"""
     response = client.get_account_summary()['SummaryMap']
     iam_output['SummaryMap'] = response
 
-# Calling all the funcions to generate data
 def iam_analysis(output_file_path):
+    """Call all functions to generate data"""
     print("Starting your AWS IAM Analysis...")
     get_users_data()
     get_groups_data()
     get_roles_data()
-    # Currently we are getting used policies via get_account_summary_data and later will try to handle this to keep 6xx policies locally rather fetching from AWS as it's time consuming and making unnecessary requests to the AWS API
+    # Currently we are getting used policies via get_account_summary_data and later will try to handle this to keep 6xx policies
+    # locally rather fetching from AWS as it's time consuming and making unnecessary requests to the AWS API
     # get_policies_data()
     get_instance_profiles_data()
     get_account_aliases_data()
